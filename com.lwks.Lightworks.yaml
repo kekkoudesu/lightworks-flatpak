@@ -1,0 +1,59 @@
+# From running dpkg --info on the .deb package:
+# Depends: ocl-icd-libopencl1, libvdpau1 (>= 1.3), libva-drm2 (>= 2.7.0), libc6 (>= 2.17), libcairo2 (>= 1.10.0), libgcc1 (>= 1:4.1.1), libgdk-pixbuf2.0-0 (>= 2.22.0), libgl1-mesa-glx | libgl1, libglib2.0-0 (>= 2.22.0), libglu1-mesa | libglu1, libgtk-3-0 (>= 3.0.0), libpango1.0-0 (>= 1.18.0), libstdc++6 (>= 4.6), libuuid1, libasound2, libc++1
+# More dependencies can be found in the usr/lib/lightworks folder after extracting the .deb archive.
+
+id: com.lwks.Lightworks
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: lightworks
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=all # udev rules for Lightworks console don't work in Flatpak, so just give Lightworks access to all devices
+  - --filesystem=host
+  - --env=LD_LIBRARY_PATH=/app/lib/lightworks
+  - --env=LD_PRELOAD=libmimalloc.so
+modules:
+  - shared-modules/glu/glu-9.json
+  - name: portaudio
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    sources:
+      - type: archive
+        url: https://github.com/PortAudio/portaudio/archive/refs/tags/v19.7.0.tar.gz
+        sha256: 5af29ba58bbdbb7bbcefaaecc77ec8fc413f0db6f4c4e286c40c3e1b83174fa0
+  - name: libedit
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://thrysoee.dk/editline/libedit-20230828-3.1.tar.gz
+        sha256: 4ee8182b6e569290e7d1f44f0f78dac8716b35f656b76528f699c69c98814dad
+  - name: lightworks
+    buildsystem: simple
+    build-commands:
+      - ar x lightworks.deb
+      - tar xf data.tar.xz
+      - rm -r control.tar.xz data.tar.xz debian-binary
+      - install -Dm755 lightworks.sh /app/bin/lightworks
+      - cp -r usr/lib/* /app/lib/
+      - install -Dm644 usr/share/applications/lightworks.desktop /app/share/applications/com.lwks.Lightworks.desktop
+      - mv usr/share/doc/* /app/share/doc/
+      - mv usr/share/fonts/* /app/share/fonts/
+      - mkdir /app/share/lightworks
+      - mv usr/share/lightworks/* /app/share/lightworks/
+      - desktop-file-edit --set-key='Version' --set-value='1.0' /app/share/applications/com.lwks.Lightworks.desktop
+      - desktop-file-edit --set-key='Icon' --set-value='/app/share/lightworks/Icons/App.png' /app/share/applications/com.lwks.Lightworks.desktop
+      - desktop-file-edit --set-key='Exec' --set-value='/app/bin/lightworks' /app/share/applications/com.lwks.Lightworks.desktop
+    sources:
+      - type: file
+        url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r144635.deb
+        dest-filename: lightworks.deb
+        sha512: 99731f7aea6f8eb1299ff387cdd7eb4589e15586733491c166107e0d975852855c99c81475d04898765521a46604a2d7363e1da429234da60256d12cbc32167e
+        only-arches:
+          - x86_64
+      - type: file
+        path: lightworks.sh
