@@ -48,3 +48,25 @@ To get a shell within the Flatpak sandbox for debugging purposes:
 ```
 flatpak --command=sh --devel com.lwks.Lightworks
 ```
+
+### Build a `.flatpak` Bundle
+
+After building the Flatpak with `flatpak-builder`, export the build:
+
+```
+flatpak build-export export build-dir
+```
+
+Now create the bundle:
+
+```
+flatpak build-bundle export lightworks.flatpak com.lwks.Lightworks --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+```
+
+## Install this Flatpak
+
+Download the `lightworks.flatpak` bundle from the Releases page and run:
+
+```
+flatpak install lightworks.flatpak
+```
