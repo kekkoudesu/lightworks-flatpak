@@ -14,10 +14,17 @@ finish-args:
   - --socket=pulseaudio
   - --device=all # udev rules for Lightworks console don't work in Flatpak, so just give Lightworks access to all devices
   - --filesystem=host
-  - --env=LD_LIBRARY_PATH=/app/lib/lightworks
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks
   - --env=LD_PRELOAD=libmimalloc.so
 modules:
   - shared-modules/glu/glu-9.json
+  - name: twolame
+    config-opts:
+      - --disable-static
+    sources:
+      - type: archive
+        url: http://downloads.sourceforge.net/twolame/twolame-0.4.0.tar.gz
+        sha256: cc35424f6019a88c6f52570b63e1baf50f62963a3eac52a03a800bb070d7c87d
   - name: portaudio
     buildsystem: cmake-ninja
     config-opts:
@@ -47,14 +54,18 @@ modules:
       - mv usr/share/lightworks/* /app/share/lightworks/
       - mkdir -p /app/share/icons/hicolor/64x64/apps
       - mv /app/share/lightworks/Icons/App.png /app/share/icons/hicolor/64x64/apps/com.lwks.Lightworks.png
-      - desktop-file-edit --set-key='Version' --set-value='1.0' /app/share/applications/com.lwks.Lightworks.desktop
       - desktop-file-edit --set-key='Icon' --set-value="${FLATPAK_ID}" "${FLATPAK_DEST}/share/applications/com.lwks.Lightworks.desktop"
       - desktop-file-edit --set-key='Exec' --set-value='/app/bin/lightworks' /app/share/applications/com.lwks.Lightworks.desktop
     sources:
-      - type: file
-        url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r145674.deb
+      #- type: file
+      #  url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r145674.deb
+      #  dest-filename: lightworks.deb
+      #  sha512: bc303fcb505e2b5879bce80240e45986f6ec38b9c6e8739074aecbd7840bf81dc99506392f8451569df3da88d1170c880874509bae42046d9d21edd917ae764a
+      #  only-arches:
+      #    - x86_64
+      - type: file # use fishmonger's provided .deb file with XDG_DATA_DIRS changes in code, downloaded locally
+        path: Lightworks-2023.2-146033.deb
         dest-filename: lightworks.deb
-        sha512: bc303fcb505e2b5879bce80240e45986f6ec38b9c6e8739074aecbd7840bf81dc99506392f8451569df3da88d1170c880874509bae42046d9d21edd917ae764a
         only-arches:
           - x86_64
       - type: file
