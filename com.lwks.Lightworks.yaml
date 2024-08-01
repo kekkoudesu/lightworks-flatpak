@@ -57,15 +57,10 @@ modules:
       - desktop-file-edit --set-key='Icon' --set-value="${FLATPAK_ID}" "${FLATPAK_DEST}/share/applications/com.lwks.Lightworks.desktop"
       - desktop-file-edit --set-key='Exec' --set-value='/app/bin/lightworks' /app/share/applications/com.lwks.Lightworks.desktop
     sources:
-      #- type: file
-      #  url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r145674.deb
-      #  dest-filename: lightworks.deb
-      #  sha512: bc303fcb505e2b5879bce80240e45986f6ec38b9c6e8739074aecbd7840bf81dc99506392f8451569df3da88d1170c880874509bae42046d9d21edd917ae764a
-      #  only-arches:
-      #    - x86_64
-      - type: file # use fishmonger's provided .deb file with XDG_DATA_DIRS changes in code, downloaded locally
-        path: Lightworks-2023.2-146033.deb
+      - type: file
+        url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r146752.deb
         dest-filename: lightworks.deb
+        sha512: 19ca35fedc2517cd0898004f48a4005f15ac382aa6e785903f0b943113310e857a42945e129fe75b899ff1ce943a213d6eb44d82da85a3a86dcef65e99c9d763 
         only-arches:
           - x86_64
       - type: file
