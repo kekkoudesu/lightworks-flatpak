@@ -16,6 +16,12 @@ finish-args:
   - --filesystem=host
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks
   - --env=LD_PRELOAD=libmimalloc.so
+add-extensions:
+  com.lwks.Lightworks.BlackMagicLibs:
+    directory: lib/blackmagic
+    add-ld-path: "-"
+    no-auto-download: true
+    autodelete: true
 modules:
   - shared-modules/glu/glu-9.json
   - name: twolame
@@ -65,3 +71,5 @@ modules:
           - x86_64
       - type: file
         path: lightworks.sh
+cleanup-commands:
+  - mkdir -p ${FLATPAK_DEST}/lib/blackmagic
