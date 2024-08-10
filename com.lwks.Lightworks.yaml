@@ -3,6 +3,7 @@
 # More dependencies can be found in the usr/lib/lightworks folder after extracting the .deb archive.
 
 id: com.lwks.Lightworks
+branch: stable
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
@@ -14,12 +15,12 @@ finish-args:
   - --socket=pulseaudio
   - --device=all # udev rules for Lightworks console don't work in Flatpak, so just give Lightworks access to all devices
   - --filesystem=host
-  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks:/app/lib/blackmagic
   - --env=LD_PRELOAD=libmimalloc.so
 add-extensions:
   com.lwks.Lightworks.BlackMagicLibs:
+    version: 'stable'
     directory: lib/blackmagic
-    add-ld-path: "-"
     no-auto-download: true
     autodelete: true
 modules:
