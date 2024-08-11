@@ -17,12 +17,6 @@ finish-args:
   - --filesystem=host
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks:/app/lib/blackmagic
   - --env=LD_PRELOAD=libmimalloc.so:libDeckLinkAPI.so
-add-extensions:
-  com.lwks.Lightworks.BlackMagicLibs:
-    version: 'stable'
-    directory: lib/blackmagic
-    no-auto-download: true
-    autodelete: true
 modules:
   - shared-modules/glu/glu-9.json
   - name: twolame
@@ -46,6 +40,14 @@ modules:
       - type: archive
         url: https://thrysoee.dk/editline/libedit-20230828-3.1.tar.gz
         sha256: 4ee8182b6e569290e7d1f44f0f78dac8716b35f656b76528f699c69c98814dad
+  - name: blackmagiclibs # bundle decklink libraries
+    buildsystem: simple
+    build-commands:
+      - tar -xf other/x86_64/desktopvideo-14.2a1-x86_64.tar.gz
+      - install -Dm644 --target-directory=/app/lib/blackmagic desktopvideo-14.2a1-x86_64/usr/lib/{*.so,blackmagic/DesktopVideo/libc++*.so.1}
+    sources:
+      - type: archive
+        path: Blackmagic_Desktop_Video_Linux_14.2.tar.tar
   - name: lightworks
     buildsystem: simple
     build-commands:
