@@ -17,33 +17,17 @@ Download the `lightworks.flatpak` bundle file from the [Releases page](https://g
 flatpak install lightworks.flatpak
 ```
 
-### Got a Decklink? Install the BlackmagicLibs Extension too!
+### Decklinks Aren't Supported
 
-First, you should build the Lightworks Flatpak package. Make sure to uninstall any existing Lightworks packages with:
+Decklink devices are not supported with the Lightworks Flatpak.
 
-```
-flatpak uninstall com.lwks.Lightworks
-```
+I investigated and tried to add support [the way OBS did years ago as an
+extension](https://github.com/flathub/com.obsproject.Studio/wiki/BlackMagic-Support),
+**but Decklink seems to require a kernel module to work. This is not supported
+under Flatpak.**
 
-Install Flatpak Builder; it's usually available in your distribution's repositories.
-
-Install org.freedesktop.Sdk//23.08:
-
-```
-flatpak install org.freedesktop.Sdk//23.08
-```
-
-Clone this repository:
-
-```
-git clone --recurse-submodules https://github.com/kekkoudesu/lightworks-flatpak.git
-```
-
-Move into the lightworks Flatpak directory:
-
-```
-cd lightworks-flatpak
-```
+I've left the instructions below on how to install the extension regardless, but
+it won't work.
 
 Build and install the Lightworks package:
 
@@ -59,12 +43,6 @@ Build and install the BlackMagicLibs extension:
 
 ```
 flatpak-builder build-dir --install --user --force-clean com.lwks.Lightworks.BlackMagicLibs.json
-```
-
-Run Lightworks:
-
-```
-flatpak run -u com.lwks.Lightworks
 ```
 
 ## Building & Developing the Flatpak Package
