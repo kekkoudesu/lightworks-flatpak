@@ -16,7 +16,7 @@ finish-args:
   - --device=all # udev rules for Lightworks console don't work in Flatpak, so just give Lightworks access to all devices
   - --filesystem=host
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks:/app/lib/blackmagic
-  - --env=LD_PRELOAD=libmimalloc.so
+  - --env=LD_PRELOAD=libmimalloc.so:libDeckLinkAPI.so
 add-extensions:
   com.lwks.Lightworks.BlackMagicLibs:
     version: 'stable'

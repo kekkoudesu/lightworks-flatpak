@@ -21,13 +21,21 @@ flatpak install lightworks.flatpak
 
 Decklink devices are not supported with the Lightworks Flatpak.
 
-I investigated and tried to add support [the way OBS did years ago as an
+I tried to add support [the way OBS did years ago as an
 extension](https://github.com/flathub/com.obsproject.Studio/wiki/BlackMagic-Support),
 **but Decklink seems to require a kernel module to work. This is not supported
 under Flatpak.**
 
-I've left the instructions below on how to install the extension regardless, but
-it won't work.
+But maybe the kernel module isn't a hard requirement? That's the only way it
+would have worked for OBS years ago...
+
+I don't have a Decklink device to test. Loading the libDeckLinkAPI.so file with
+`LD_PRELOAD` seems to make the errors go away, but I don't know if it will
+actually lead Lightworks to load and use the Decklink if it's detected on the
+system.
+
+If you have a Decklink, you can give building this a try. Please let me know if
+it actually works through [this issue](https://github.com/kekkoudesu/lightworks-flatpak/issues/1).
 
 Build and install the Lightworks package:
 
