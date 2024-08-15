@@ -11,24 +11,26 @@ tracker!](https://github.com/kekkoudesu/lightworks-flatpak/issues)
 
 ## Install this Flatpak
 
-Download the `lightworks.flatpak` bundle file from the [Releases page](https://github.com/kekkoudesu/lightworks-flatpak/releases/latest) and run:
+Download the `lightworks.flatpak` bundle file from the [Releases
+page](https://github.com/kekkoudesu/lightworks-flatpak/releases/latest) and
+double click it to install with GNOME Software or KDE Discover.
+
+Or run:
 
 ```
 flatpak install lightworks.flatpak
 ```
 
-### Decklink Support (?)
+### Decklink Support
 
-I don't have a Decklink device to test, but I've bundled the Blackmagic
-Libraries with the Flatpak package. Loading the libDeckLinkAPI.so file with
-`LD_PRELOAD` seems to make the errors go away, but I don't know if it will
-actually lead Lightworks to load and use the Decklink if it's detected on the
-system.
+I've bundled the Blackmagic Libraries with the Flatpak package, which seems to
+work for users with Decklinks.
 
-If you have a Decklink, please give [this
-flatpak](https://github.com/kekkoudesu/lightworks-flatpak/releases/download/v0.2/lightworks-decklink.flatpak)
-a try. Please let me know if it actually works through [this
-issue](https://github.com/kekkoudesu/lightworks-flatpak/issues/1).
+If you have a Decklink, install [this
+flatpak](https://github.com/kekkoudesu/lightworks-flatpak/releases/download/v0.2/lightworks-decklink.flatpak).
+
+All Flatpaks produced moving forward will contain the Blackmagic Libraries for
+Decklink compatibility by default; there won't be a separate Flatpak.
 
 ## Building & Developing the Flatpak Package
 
