@@ -32,6 +32,12 @@ flatpak](https://github.com/kekkoudesu/lightworks-flatpak/releases/download/v0.2
 All Flatpaks produced moving forward will contain the Blackmagic Libraries for
 Decklink compatibility by default; there won't be a separate Flatpak.
 
+#### Building With Decklink Support
+
+When building this package, you need to download the Blackmagic libraries to the
+same directory, available at this link:
+https://www.blackmagicdesign.com/support/download/b97e55f37a0042fbacd234971d8c93ed/Linux
+
 ## Building & Developing the Flatpak Package
 
 You need Flatpak Builder.
