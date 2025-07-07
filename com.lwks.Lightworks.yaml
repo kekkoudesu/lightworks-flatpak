@@ -14,7 +14,7 @@ finish-args:
   - --socket=x11
   - --socket=pulseaudio
   - --device=all # udev rules for Lightworks console don't work in Flatpak, so just give Lightworks access to all devices
-  - --filesystem=host
+  - --filesystem=home
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/lightworks:/app/lib/blackmagic
   - --env=LD_PRELOAD=libmimalloc.so:libDeckLinkAPI.so
 modules:
@@ -67,9 +67,9 @@ modules:
       - desktop-file-edit --set-key='Exec' --set-value='/app/bin/lightworks' /app/share/applications/com.lwks.Lightworks.desktop
     sources:
       - type: file
-        url: https://cdn.lwks.com/releases/2023.2/lightworks_2023.2_r146752.deb
+        url: https://cdn.lwks.com/releases/2025.1/Lightworks-2025.1-151752.deb
         dest-filename: lightworks.deb
-        sha512: 19ca35fedc2517cd0898004f48a4005f15ac382aa6e785903f0b943113310e857a42945e129fe75b899ff1ce943a213d6eb44d82da85a3a86dcef65e99c9d763 
+        sha512: cb7695866abf7cd9d69def531006d0992160954839f26ba526ed47d097ab60922014b338fd889d146c906226a0d9baeacaa614815961f7cdc6ef4e755d9781e7 
         only-arches:
           - x86_64
       - type: file
